@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/signin.css">
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<!-- jQuery  -->
@@ -42,31 +43,17 @@
 		        }
 */
 			 ?>
-			 
-<div id="login">
-        <div class="container">
-            <div id="login-row" class="row justify-content-center align-items-center">
-                <div id="login-column" class="col-md-6">
-                    <div id="login-box" class="col-md-12">
-                        <form id="login-form" class="form" action="" method="post">
-                            <h3 class="text-center text-info">Inicio de sesion</h3>
-                            <div class="form-group">
-                                <label for="username" class="text-info">Usuario:</label><br>
-                                <input type="text" name="usuario" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="text-info">Contraseña:</label><br>
-                                <input type="password" name="contrasena" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-info btn-md" value="Ingresar">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<form class="form-signin">
+  	<img class="mb-4" src="img/user.svg" alt="" width="200" height="200">
+  	<h1 class="h3 mb-3 font-weight-normal">Inicia Sesion</h1>
+ 	<label for="inputEmail" class="sr-only">Usuario</label>
+  	<input type="email" id="inputEmail" class="form-control" placeholder="Ingrese Usuario" required autofocus>
+  	<label for="inputPassword" class="sr-only">Contraseña</label>
+  	<input type="password" id="inputPassword" class="form-control" placeholder="Ingrese Contraseña" required>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+  	<div id="foot">
+  		<p class="mt-5 mb-3 text-muted">&copy; EPIS-UNAJMA</p>
+	</div>
+</form>
 </body>
 </html>
