@@ -44,15 +44,15 @@
 */
 			 ?>
 <form class="form-signin">
-  	<img class="mb-4" src="img/user.svg" alt="" width="200" height="200">
-  	<h1 class="h3 mb-3 font-weight-normal">Inicia Sesion</h1>
+  	<img class="mb-4" src="img/user.svg" alt="" width="280" height="200">
+  	<h1 class="h3 mb-3 font-weight-normal" style="margin-left:70px;">Inicia Sesion</h1>
  	<label for="inputEmail" class="sr-only">Usuario</label>
-  	<input type="email" id="inputEmail" class="form-control" placeholder="Ingrese Usuario" required autofocus>
+  	<input type="text" id="inputEmail" class="form-control" placeholder="Ingrese Usuario" required autofocus>
   	<label for="inputPassword" class="sr-only">Contraseña</label>
   	<input type="password" id="inputPassword" class="form-control" placeholder="Ingrese Contraseña" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
   	<div id="foot">
-  		<p class="mt-5 mb-3 text-muted">&copy; EPIS-UNAJMA</p>
+  		<p class="mt-5 mb-3 text-muted" style="margin-left:70px;">&copy; EPIS-UNAJMA</p>
 	</div>
 </form>
 </body>
