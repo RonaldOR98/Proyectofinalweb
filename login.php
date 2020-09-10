@@ -1,6 +1,6 @@
 <?php 
     $hn = 'localhost';
-    $db = 'proyecto';
+    $db = 'ottos_26710411_proyecto';
     $un = 'root';
     $pw = '';
 ?>

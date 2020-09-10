@@ -46,7 +46,7 @@
   </button>
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">CERRAR SESION</a>
+      <a class="nav-link" href="salir.php">CERRAR SESION</a>
     </li>
   </ul>
 </nav>
