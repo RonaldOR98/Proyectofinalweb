@@ -10,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
-
+<link href="css/style.css" rel="stylesheet">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -36,8 +36,33 @@
 	$now = $_SESSION['User'];
 	if ($now  == null || $now = '') {
 		echo 'Error Ingrese de nuevo';
-		die();	
-	}
+        die();
+    }	
+        require_once 'login.php';
+        $conexion = new mysqli($hn, $un, $pw, $db);
+        if ($conexion->connect_error) die ("Fatal error");
+          $user=$_SESSION['User'];
+     
+         if (isset($_POST['nombre']) &&
+             isset($_POST['ape']) &&
+             isset($_POST['dni']) &&
+             isset($_POST['dir'])&&
+             isset($_POST['tel']))
+         {
+             
+             $nom = $_POST['nombre'];
+             $ape = $_POST['ape'];
+             $dni = $_POST['dni'];
+             $dir = $_POST['dir'];
+             $tel = $_POST['tel'];
+
+             $query = "INSERT INTO cliente VALUES" .
+                 "(null, '$nom', '$ape', '$dni', '$dir','$tel')";
+             $result = $conexion->query($query);
+             if (!$result) echo "INSERT falló <br><br>";
+             header("location:cliente.php");
+        }
+	
 ?>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">COMERCIAL PALOMINO</a>
@@ -93,10 +118,61 @@
             </a>
           </li>
         </ul>
+
+        
       </div>
     </nav>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <img class="mb-4" src="img/menu.svg" alt="" width="750" height="500" style="margin-left:150px;">
+        <div id="reg">
+        <h1>Clientes</h1>
+        <form class="form-signin" action="" method="post">
+         	<label for="id" class="text-info">ID</label>
+  	        <input type="text"  class="form-control" name="id" autofocus readonly>
+  	        <label for="nombre" class="text-info">Nombres</label>
+  	        <input type="text" class="form-control" name="nombre"  placeholder="Ingrese nombre" required>
+            <label for="ape" class="text-info">Apellidos</label>
+  	        <input type="text" class="form-control" name="ape"  placeholder="Ingrese Apellidos" required>
+            <label for="dni" class="text-info">Dni</label>
+  	        <input type="text" class="form-control" name="dni"  placeholder="Ingrese DNI" required>
+            <label for="Dir" class="text-info">Direccion</label>
+            <input type="text" class="form-control" name="dir"  placeholder="Ingrese Direccion" required>
+            <label for="tel" class="text-info">Telefono</label>
+            <input type="text" class="form-control" name="tel"  placeholder="Ingrese Telefono" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
+        </form>
+        <div id="tabla">
+        <table class="table table-hover">
+		<tr>
+			<td>ID</td>
+			<td>NOMBRES</td>
+			<td>APELLIDOS</td>
+            <td>DNI</td>
+			<td>DIRECCION</td>
+            <td>TELEFONO</td>
+		</tr>
+
+		<?php 
+		$sql="SELECT * from cliente";
+		$result=mysqli_query($conexion,$sql);
+
+		while($mostrar=mysqli_fetch_array($result)){
+		 ?>
+
+		<tr>
+			<td><?php echo $mostrar['IDCLI'] ?></td>
+			<td><?php echo $mostrar['NOMCLI'] ?></td>
+			<td><?php echo $mostrar['APECLI'] ?></td>
+            <td><?php echo $mostrar['DNI'] ?></td>
+			<td><?php echo $mostrar['DIRCLI'] ?></td>
+            <td><?php echo $mostrar['TELCLI'] ?></td>
+		</tr>
+	<?php 
+	}
+	 ?>
+	</table>
+    </div>
+        </div>
+        
     </main>
   </div>
 </div>

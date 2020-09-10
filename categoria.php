@@ -10,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
-
+<link href="css/style.css" rel="stylesheet">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -36,8 +36,28 @@
 	$now = $_SESSION['User'];
 	if ($now  == null || $now = '') {
 		echo 'Error Ingrese de nuevo';
-		die();	
-	}
+        die();
+    }	
+        require_once 'login.php';
+        $conexion = new mysqli($hn, $un, $pw, $db);
+        if ($conexion->connect_error) die ("Fatal error");
+          $user=$_SESSION['User'];
+     
+         if (isset($_POST['id']) &&
+             isset($_POST['nombre']) &&
+             isset($_POST['descrip']))
+         {
+             
+             $nom = $_POST['nombre'];
+             $descipcion = $_POST['descrip'];
+            
+             $query = "INSERT INTO categoria VALUES" .
+                 "(null, '$nom', '$descipcion')";
+             $result = $conexion->query($query);
+             if (!$result) echo "INSERT falló <br><br>";
+             header("location:categoria.php");
+        }
+	
 ?>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">COMERCIAL PALOMINO</a>
@@ -93,10 +113,48 @@
             </a>
           </li>
         </ul>
+
       </div>
     </nav>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <img class="mb-4" src="img/menu.svg" alt="" width="750" height="500" style="margin-left:150px;">
+        <div id="reg">
+        <h1>Categorias</h1>
+        <form class="form-signin" action="" method="post">
+         	<label for="id" class="text-info">ID</label>
+  	        <input type="text"  class="form-control" name="id" autofocus readonly>
+  	        <label for="nombre" class="text-info">Nombre</label>
+  	        <input type="text" class="form-control" name="nombre"  placeholder="Ingrese nombre" required>
+            <label for="descrip" class="text-info">Descripcion</label>
+  	        <input type="text" class="form-control" name="descrip"  placeholder="Ingrese descripcion" required>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
+        </form>
+        <div id="tabla">
+        <table class="table table-hover">
+		<tr>
+			<td>ID</td>
+			<td>NOMBRE</td>
+			<td>DESCRIPCION</td>
+		</tr>
+
+		<?php 
+		$sql="SELECT * from categoria";
+		$result=mysqli_query($conexion,$sql);
+
+		while($mostrar=mysqli_fetch_array($result)){
+		 ?>
+
+		<tr>
+			<td><?php echo $mostrar['IDCAT'] ?></td>
+			<td><?php echo $mostrar['NOMBRE'] ?></td>
+			<td><?php echo $mostrar['DESCRIP'] ?></td>
+		</tr>
+	<?php 
+	}
+	 ?>
+	</table>
+    </div>
+        </div>
+        
     </main>
   </div>
 </div>

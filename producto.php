@@ -10,7 +10,7 @@
 
     <!-- Bootstrap core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
-
+<link href="css/style.css" rel="stylesheet">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -36,8 +36,31 @@
 	$now = $_SESSION['User'];
 	if ($now  == null || $now = '') {
 		echo 'Error Ingrese de nuevo';
-		die();	
-	}
+        die();
+    }	
+        require_once 'login.php';
+        $conexion = new mysqli($hn, $un, $pw, $db);
+        if ($conexion->connect_error) die ("Fatal error");
+          $user=$_SESSION['User'];
+     
+         if (isset($_POST['nombre']) &&
+             isset($_POST['uni']) &&
+             isset($_POST['pu']) &&
+             isset($_POST['cat']))
+         {
+             
+             $nom = $_POST['nombre'];
+             $unit = $_POST['uni'];
+             $pu = $_POST['pu'];
+             $cat = $_POST['cat'];
+            
+             $query = "INSERT INTO producto VALUES" .
+                 "(null, '$nom', '$unit', '$pu', '$cat')";
+             $result = $conexion->query($query);
+             if (!$result) echo "INSERT falló <br><br>";
+             header("location:producto.php");
+        }
+	
 ?>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">COMERCIAL PALOMINO</a>
@@ -93,10 +116,65 @@
             </a>
           </li>
         </ul>
+
       </div>
     </nav>
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <img class="mb-4" src="img/menu.svg" alt="" width="750" height="500" style="margin-left:150px;">
+        <div id="reg">
+        <h1>Productos</h1>
+        <form class="form-signin" action="" method="post">
+         	<label for="id" class="text-info">ID</label>
+  	        <input type="text"  class="form-control" name="id" autofocus readonly>
+  	        <label for="nombre" class="text-info">Nombre</label>
+  	        <input type="text" class="form-control" name="nombre"  placeholder="Ingrese nombre" required>
+            <label for="uni" class="text-info">Unidad</label>
+  	        <input type="text" class="form-control" name="uni"  placeholder="Ingrese Unidad" required>
+            <label for="pu" class="text-info">Precio Unitario</label>
+  	        <input type="text" class="form-control" name="pu"  placeholder="Ingrese Precio" required>
+            <label for="cat" class="text-info">Categoria</label>
+            <input type="text" class="form-control" name="cat"  placeholder="Ingrese Codigo Categoria" required>
+            <!--<select name="cat" class="form-control" required>
+            <?php /*
+            $consulta="SELECT * FROM categoria";
+            $ejecutar=mysqli_query($conexion,$consulta);
+            ?>
+            <?php foreach ($ejecutar as $opciones):?>
+            <option value="<?php echo $opciones['IDPRODUCTO']?>"><?php echo $opciones['NOMBRE']?></option>
+            <?php endforeach */?>
+            </select>-->
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Guardar</button>
+        </form>
+        <div id="tabla">
+        <table class="table table-hover">
+		<tr>
+			<td>ID</td>
+			<td>NOMBRE</td>
+			<td>UNIDAD</td>
+            <td>P. UNITARIO</td>
+			<td>CATEGORIA</td>
+		</tr>
+
+		<?php 
+		$sql="SELECT * from producto";
+		$result=mysqli_query($conexion,$sql);
+
+		while($mostrar=mysqli_fetch_array($result)){
+		 ?>
+
+		<tr>
+			<td><?php echo $mostrar['IDPRODUCTO'] ?></td>
+			<td><?php echo $mostrar['NOMBREPROD'] ?></td>
+			<td><?php echo $mostrar['UNIDAD'] ?></td>
+            <td><?php echo $mostrar['PREUNIT'] ?></td>
+			<td><?php echo $mostrar['PR_IDCAT'] ?></td>
+		</tr>
+	<?php 
+	}
+	 ?>
+	</table>
+    </div>
+        </div>
+        
     </main>
   </div>
 </div>

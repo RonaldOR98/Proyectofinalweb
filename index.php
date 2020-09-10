@@ -14,25 +14,29 @@
 </head>
 <body>
 <?php 
-	///session_start();
-	//require_once 'login.php';
-	///$conexion = new mysqli($hn, $un, $pw, $db);
-	//if ($conexion->connect_error) die ("Fatal error");
-/*
+	session_start();
+	require_once 'login.php';
+	$conexion = new mysqli($hn, $un, $pw, $db);
+	if ($conexion->connect_error) die ("Fatal error");
+
 	if(!empty($_POST['usuario']) && !empty($_POST['contrasena']))
 	{
 		$usu = mysql_fix_string($conexion, $_POST['usuario']);
 		$contra = md5($_POST['contrasena']);
 
-                    $query = "SELECT * FROM usuario2 WHERE Correo='$usu' AND Contraseña='$contra'";
+                    $query = "SELECT * FROM usuario WHERE USUARIO='$usu' AND CONTRA='$contra'";
                     
                     $result = $conexion->query($query);
                    
                     $_SESSION['User'] = $usu;
 		            if ($result->num_rows >= 1)
-		                header("Location: inicio.php");
-		            else
-		                echo 'contraseña Incorrecta';
+		                header("Location: menu.php");
+					else
+					
+					echo'<script type="text/javascript">
+					alert("Correo / Password incorrectos");
+					window.location.href="index.php";
+					</script>';
 		        }
 		        
 		        function mysql_fix_string($coneccion, $string)
@@ -41,15 +45,16 @@
 		                $string = stripcslashes($string);
 		            return $coneccion->real_escape_string($string);
 		        }
-*/
+
 			 ?>
-<form class="form-signin">
+<form class="form-signin" action="" method="post">
+
   	<img class="mb-4" src="img/user.svg" alt="" width="280" height="200">
   	<h1 class="h3 mb-3 font-weight-normal" style="margin-left:70px;">Inicia Sesion</h1>
  	<label for="inputEmail" class="sr-only">Usuario</label>
-  	<input type="text" id="inputEmail" class="form-control" placeholder="Ingrese Usuario" required autofocus>
+  	<input type="text" id="inputEmail" class="form-control" name="usuario" placeholder="Ingrese Usuario" required autofocus>
   	<label for="inputPassword" class="sr-only">Contraseña</label>
-  	<input type="password" id="inputPassword" class="form-control" placeholder="Ingrese Contraseña" required>
+  	<input type="password" id="inputPassword" class="form-control" name="contrasena"  placeholder="Ingrese Contraseña" required>
   <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
   	<div id="foot">
   		<p class="mt-5 mb-3 text-muted" style="margin-left:70px;">&copy; EPIS-UNAJMA</p>
